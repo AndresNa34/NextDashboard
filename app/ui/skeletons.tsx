@@ -216,3 +216,41 @@ export function InvoicesTableSkeleton() {
     </div>
   );
 }
+
+export function CustomersTableSkeleton() {
+  return (
+    <div className="mt-6 flow-root">
+      <div className="inline-block min-w-full align-middle">
+        <div className="rounded-md bg-gray-50 p-2 md:pt-0">
+          {/* Mobile skeleton */}
+          <div className="md:hidden space-y-2">
+            <div className="w-full h-24 rounded-md bg-gray-100" />
+            <div className="w-full h-24 rounded-md bg-gray-100" />
+            <div className="w-full h-24 rounded-md bg-gray-100" />
+          </div>
+
+          {/* Desktop table skeleton */}
+          <table className="hidden min-w-full text-gray-900 md:table">
+            <thead className="rounded-md bg-gray-50 text-left text-sm font-normal">
+              <tr>
+                <th className="px-4 py-5 font-medium sm:pl-6">Name</th>
+                <th className="px-3 py-5 font-medium">Email</th>
+                <th className="px-3 py-5 font-medium">Total Invoices</th>
+                <th className="px-3 py-5 font-medium">Total Pending</th>
+                <th className="px-3 py-5 font-medium">Total Paid</th>
+              </tr>
+            </thead>
+
+            <tbody className="bg-white divide-y divide-gray-200">
+              <TableRowSkeleton />
+              <TableRowSkeleton />
+              <TableRowSkeleton />
+              <TableRowSkeleton />
+              <TableRowSkeleton />
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
