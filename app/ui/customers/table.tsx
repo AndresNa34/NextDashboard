@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { lusitana } from '@/app/ui/fonts';
 import Search from '@/app/ui/search';
+import { UpdateCustomer, DeleteCustomer } from '@/app/ui/customers/buttons';
 import {
   CustomersTableType,
   FormattedCustomersTable,
@@ -32,13 +33,19 @@ export default async function CustomersTable({
                       <div>
                         <div className="mb-2 flex items-center">
                           <div className="flex items-center gap-3">
-                            <Image
-                              src={customer.image_url}
-                              className="rounded-full"
-                              alt={`${customer.name}'s profile picture`}
-                              width={28}
-                              height={28}
-                            />
+                            {customer.image_url ? (
+                              <Image
+                                src={customer.image_url}
+                                className="rounded-full"
+                                alt={`${customer.name}'s profile picture`}
+                                width={28}
+                                height={28}
+                              />
+                            ) : (
+                              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-200 text-xs font-medium text-gray-600">
+                                {customer.name.charAt(0).toUpperCase()}
+                              </div>
+                            )}
                             <p>{customer.name}</p>
                           </div>
                         </div>
@@ -81,6 +88,9 @@ export default async function CustomersTable({
                     <th scope="col" className="px-4 py-5 font-medium">
                       Total Paid
                     </th>
+                    <th scope="col" className="relative py-3 pl-6 pr-3">
+                      <span className="sr-only">Edit</span>
+                    </th>
                   </tr>
                 </thead>
 
@@ -89,13 +99,19 @@ export default async function CustomersTable({
                     <tr key={customer.id} className="group">
                       <td className="whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm text-black group-first-of-type:rounded-md group-last-of-type:rounded-md sm:pl-6">
                         <div className="flex items-center gap-3">
-                          <Image
-                            src={customer.image_url}
-                            className="rounded-full"
-                            alt={`${customer.name}'s profile picture`}
-                            width={28}
-                            height={28}
-                          />
+                          {customer.image_url ? (
+                            <Image
+                              src={customer.image_url}
+                              className="rounded-full"
+                              alt={`${customer.name}'s profile picture`}
+                              width={28}
+                              height={28}
+                            />
+                          ) : (
+                            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-200 text-xs font-medium text-gray-600">
+                              {customer.name.charAt(0).toUpperCase()}
+                            </div>
+                          )}
                           <p>{customer.name}</p>
                         </div>
                       </td>
@@ -108,8 +124,14 @@ export default async function CustomersTable({
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
                         {customer.total_pending}
                       </td>
-                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md">
+                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
                         {customer.total_paid}
+                      </td>
+                      <td className="whitespace-nowrap bg-white py-3 pl-6 pr-3">
+                        <div className="flex justify-end gap-3">
+                          <UpdateCustomer id={customer.id} />
+                          <DeleteCustomer id={customer.id} />
+                        </div>
                       </td>
                     </tr>
                   ))}
